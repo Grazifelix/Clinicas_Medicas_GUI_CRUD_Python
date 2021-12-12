@@ -76,6 +76,32 @@ def atualizar():
         db_connection.commit()
         db_connection.close()
 
+def limparGet():
+    e_codcli.delete(0, 'end')
+    e_NomeCli.delete(0, 'end')
+    e_Endereco.delete(0, 'end')
+    e_Telefone.delete(0, 'end')
+    e_Email.delete(0, 'end')
+
+def get():
+    if (e_codcli.get()==""):
+        MessageBox.showinfo("Adicione o codigo para clinica para excluir")
+    else:
+        db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
+        cursor = db_connection.cursor()
+        cursor.execute("SELECT * FROM clinica WHERE CodCli='" + e_codcli.get() + "'")
+        rows = cursor.fetchall()
+
+        for row in rows:
+            e_NomeCli.insert(0, row[1])
+            e_Endereco.insert(0, row[2])
+            e_Telefone.insert(0, row[3])
+            e_Email.insert(0, row[4])
+
+        cursor.close()
+        db_connection.commit()
+        db_connection.close()
+
 #INDEXSCREEN
 index = Tk()
 index.geometry('500x600')
@@ -135,7 +161,15 @@ visualizarButton.grid(column=3, row=6, padx=10, pady=10)
 
 deleteButton = Button(index, text='Deletar', font=('italic', 10), bg='white', command=delete)
 deleteButton.place(x=50, y=20)
-deleteButton.grid(column=4, row=6, padx=10, pady=10)
+deleteButton.grid(column=2, row=7, padx=10, pady=10)
+
+getButton = Button(index, text='Obter Dados', font=('italic', 10), bg='white', command=get)
+getButton.place(x=50, y=20)
+getButton.grid(column=3, row=7, padx=10, pady=10)
+
+limparButton = Button(index, text='Limpar Dados', font=('italic', 10), bg='white', command=limparGet)
+limparButton.place(x=50, y=20)
+limparButton.grid(column=2, row=8, padx=10, pady=10)
 
 index.mainloop()
 
