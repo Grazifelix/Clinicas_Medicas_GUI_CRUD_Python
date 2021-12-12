@@ -5,11 +5,9 @@ Python - MySQL - CRUD - GUI
 
 
 
-
-
 MATERIAIS
 1.Aula básica sobre Tkinter: https://www.youtube.com/watch?v=AiBC01p58oI
 
 2.Sistema de cadastro de produtos com python e MySQL: https://www.youtube.com/watch?v=SpHp0IfhorY
 
-
+INTERFACE GRAFICA COM TKINTER E MYSQL: https://www.youtube.com/watch?v=d56sf29tSzw
