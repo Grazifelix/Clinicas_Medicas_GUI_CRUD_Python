@@ -44,12 +44,37 @@ def delete():
         e_Telefone.delete(0, 'end')
         e_Email.delete(0, 'end')
 
-        MessageBox.showinfo(cursor.rowcount, "Delete Sucessfully.")
+        MessageBox.showinfo(cursor.rowcount, "Excluido com sucesso")
         cursor.close()
         db_connection.commit()
         db_connection.close()
 
+def atualizar():
+    CodCli = e_codcli.get()
+    NomeCli = e_NomeCli.get()
+    Endereco = e_Endereco.get()
+    Telefone = e_Telefone.get()
+    Email = e_Email.get()
+    if (CodCli == '' or NomeCli == "" or Endereco == '' or Telefone == "" or Email == ""):
+        MessageBox.showinfo("Insira todas as informações para poder atualizar")
+    else:
+        db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208',
+                                        database='clinicas_medicas')
+        cursor = db_connection.cursor()
+        cursor.execute("UPDATE clinica SET NomeCli='"+ NomeCli +"', Endereco='"+Endereco+"', Telefone='"+Telefone+"', Email='"+Email+"' where CodCli='" + CodCli + "'")
+        cursor.execute("commit")
 
+        #limpando inputs
+        e_codcli.delete(0, 'end')
+        e_NomeCli.delete(0, 'end')
+        e_Endereco.delete(0, 'end')
+        e_Telefone.delete(0, 'end')
+        e_Email.delete(0, 'end')
+
+        MessageBox.showinfo(cursor.rowcount, "Atualizado com sucesso")
+        cursor.close()
+        db_connection.commit()
+        db_connection.close()
 
 #INDEXSCREEN
 index = Tk()
