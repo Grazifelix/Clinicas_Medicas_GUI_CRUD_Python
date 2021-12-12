@@ -1,0 +1,15 @@
+Python - MySQL - CRUD - GUI
+
+1.conectar python com MySQL: https://mayararysia.medium.com/python-conex%C3%A3o-com-o-mysql-d919bb596702
+
+
+
+
+
+
+MATERIAIS
+1.Aula básica sobre Tkinter: https://www.youtube.com/watch?v=AiBC01p58oI
+
+2.Sistema de cadastro de produtos com python e MySQL: https://www.youtube.com/watch?v=SpHp0IfhorY
+
+
