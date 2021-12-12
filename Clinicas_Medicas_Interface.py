@@ -3,6 +3,32 @@ import tkinter.messagebox as MessageBox
 import mysql.connector as mysqlcn
 
 
+def janela2():
+    index.destroy()
+    janela2 = Tk()
+    janela2.geometry('500x600')
+    janela2.title("janela 2")
+    janela2.mainloop()
+
+def inserir():
+    CodCli = e_codcli.get()
+    NomeCli = e_NomeCli.get()
+    Endereco = e_Endereco.get()
+    Telefone = e_Telefone.get()
+    Email = e_Telefone.get()
+    if (CodCli == '' or NomeCli == "" or Endereco == '' or Telefone == "" or Email == ""):
+        MessageBox.showinfo("Insira todas as informações para poder enviar.")
+    else:
+        db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208',
+                                        database='clinicas_medicas')
+        cursor = db_connection.cursor()
+        sql = 'insert into CLINICA (CodCli, NomeCli, Endereco, Telefone, Email) VALUES (%s, %s, %s, %s, %s)'
+        values = (5, 'Clinica Omega', 'Rua Camelia, 66, Recife-PE', '36656998', 'clinicaomega@gmail.com')
+        cursor.execute(sql, values)
+        print(cursor.rowcount, "record inserted.")
+        cursor.close()
+        db_connection.commit()
+        db_connection.close()
 
 #INDEXSCREEN
 index = Tk()
@@ -53,9 +79,9 @@ e_Email.place(x=200, y=50)
 e_Email.grid(column=3, row=4, padx=10, pady=10)
 
 #botão
-inserir = Button(index, text='Inserir', font=('italic', 10), bg='white', command=janela2)
-inserir.place(x=50, y=20)
-inserir.grid(column=2, row=6, padx=10, pady=10)
+inserirButton = Button(index, text='Inserir', font=('italic', 10), bg='white', command=janela2)
+inserirButton.place(x=50, y=20)
+inserirButton.grid(column=2, row=6, padx=10, pady=10)
 
 index.mainloop()
 
