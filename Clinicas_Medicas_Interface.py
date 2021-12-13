@@ -203,7 +203,7 @@ e_Email = Entry()
 e_Email.place(x=200, y=50)
 e_Email.grid(column=3, row=4, padx=10, pady=10)
 
-#botão
+#CRUDbotões
 inserirButton = Button(index, text='Inserir', font=('italic', 10), bg='white', command=inserir)
 inserirButton.place(x=50, y=20)
 inserirButton.grid(column=2, row=6, padx=10, pady=10)
@@ -216,6 +216,7 @@ deleteButton = Button(index, text='Deletar', font=('italic', 10), bg='white', co
 deleteButton.place(x=50, y=20)
 deleteButton.grid(column=2, row=7, padx=10, pady=10)
 
+#Botões extras
 getButton = Button(index, text='Obter Dados', font=('italic', 10), bg='white', command=get)
 getButton.place(x=50, y=20)
 getButton.grid(column=3, row=7, padx=10, pady=10)
@@ -236,7 +237,7 @@ lista.grid(row=0, column=4, sticky="nsew")
 #lista.grid(column=4, row=0, padx=10, pady=10)
 show()
 
-#BUTOES EXTRAS (para fins de demostração)
+#Botões para fins de demostração
 #CLINICA
 clinicaButton = Button(index, text='Clinica', font=('italic', 10), bg='white', command=show)
 clinicaButton.place(x=50, y=20)
@@ -247,12 +248,12 @@ medicoButton = Button(index, text='Medico', font=('italic', 10), bg='white', com
 medicoButton.place(x=50, y=20)
 medicoButton.grid(column=4, row=2, padx=10, pady=10)
 
-#QTD_MEDICOS-CLINICA
+#GROUPBY
 QTDmedicoButton = Button(index, text='GroupBy', font=('italic', 10), bg='white', command=groupBy)
 QTDmedicoButton.place(x=50, y=20)
 QTDmedicoButton.grid(column=4, row=3, padx=10, pady=10)
 
-#Agregar
+#COUNT - AGREGAÇÃO
 agregarButton = Button(index, text='Agregar', font=('italic', 10), bg='white', command=AgregationFunction)
 agregarButton.place(x=50, y=20)
 agregarButton.grid(column=4, row=4, padx=10, pady=10)
