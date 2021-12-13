@@ -2,6 +2,7 @@ from tkinter import *
 import tkinter.messagebox as MessageBox
 import mysql.connector as mysqlcn
 
+# Função inserir
 def inserir():
     CodCli = e_codcli.get()
     NomeCli = e_NomeCli.get()
@@ -30,6 +31,7 @@ def inserir():
         cursor.close()
         db_connection.close()
 
+#Função Deletar
 def delete():
     if (e_codcli.get()==""):
         MessageBox.showinfo("Delete Status", "Adicione o codigo para clinica para excluir")
@@ -49,6 +51,7 @@ def delete():
         db_connection.commit()
         db_connection.close()
 
+#Função atualizar
 def atualizar():
     CodCli = e_codcli.get()
     NomeCli = e_NomeCli.get()
@@ -76,6 +79,7 @@ def atualizar():
         db_connection.commit()
         db_connection.close()
 
+# Função limpar inputs
 def limparGet():
     e_codcli.delete(0, 'end')
     e_NomeCli.delete(0, 'end')
@@ -83,9 +87,10 @@ def limparGet():
     e_Telefone.delete(0, 'end')
     e_Email.delete(0, 'end')
 
+#Função Obter dados
 def get():
     if (e_codcli.get()==""):
-        MessageBox.showinfo("Delete Status", "Adicione o codigo para clinica para excluir")
+        MessageBox.showinfo("Get Status", "Adicione o codigo para clinica para excluir")
     else:
         db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
         cursor = db_connection.cursor()
@@ -102,6 +107,7 @@ def get():
         db_connection.commit()
         db_connection.close()
 
+# função listar clinicas
 def show():
     db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
     cursor = db_connection.cursor()
@@ -112,6 +118,18 @@ def show():
     for row in rows:
         insertData = str(row[0]) + ' | '+ row[1]+' | '+row[2]+' | '+row[3]+' | '+row[4] + '\n'
         lista.insert(lista.size()+1, insertData)
+
+#Função listar medicos
+def showMedico():
+    db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT medico.*, CargaHorariaSemanal FROM medico inner join clinica_medico on clinica_medico.CodMed = medico.CodMed;")
+    rows = cursor.fetchall()
+    lista.delete(0, lista.size())
+
+    for row in rows:
+        insertData = str(row[0]) + ' | ' + row[1] + ' | ' + row[2] + ' | ' + str(row[3]) + ' | ' + row[4] + ' | ' + str(row[5]) + ' | ' +str(row[6])
+        lista.insert(lista.size() + 1, insertData)
 
 #INDEXSCREEN
 index = Tk()
@@ -193,6 +211,18 @@ scrollbar.grid(row=0, column=5, sticky="ns")
 lista.grid(row=0, column=4, sticky="nsew")
 #lista.grid(column=4, row=0, padx=10, pady=10)
 show()
+
+#BUTOES EXTRAS (para fins de demostração)
+#CLINICA
+clinicaButton = Button(index, text='Clinica', font=('italic', 10), bg='white', command=show)
+clinicaButton.place(x=50, y=20)
+clinicaButton.grid(column=4, row=1, padx=10, pady=10)
+
+#MEDICO
+medicoButton = Button(index, text='Medico', font=('italic', 10), bg='white', command=showMedico)
+medicoButton.place(x=50, y=20)
+medicoButton.grid(column=4, row=2, padx=10, pady=10)
+
 
 index.mainloop()
 
