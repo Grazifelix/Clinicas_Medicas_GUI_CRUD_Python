@@ -208,9 +208,9 @@ inserirButton = Button(index, text='Inserir', font=('italic', 10), bg='white', c
 inserirButton.place(x=50, y=20)
 inserirButton.grid(column=2, row=6, padx=10, pady=10)
 
-visualizarButton = Button(index, text='Atualizar', font=('italic', 10), bg='white', command=atualizar)
-visualizarButton.place(x=50, y=20)
-visualizarButton.grid(column=3, row=6, padx=10, pady=10)
+atualizarButton = Button(index, text='Atualizar', font=('italic', 10), bg='white', command=atualizar)
+atualizarButton.place(x=50, y=20)
+atualizarButton.grid(column=3, row=6, padx=10, pady=10)
 
 deleteButton = Button(index, text='Deletar', font=('italic', 10), bg='white', command=delete)
 deleteButton.place(x=50, y=20)
@@ -234,7 +234,6 @@ lista.grid_rowconfigure(0, weight=1)
 lista.grid_columnconfigure(0, weight=1)
 scrollbar.grid(row=0, column=5, sticky="ns")
 lista.grid(row=0, column=4, sticky="nsew")
-#lista.grid(column=4, row=0, padx=10, pady=10)
 show()
 
 #Botões para fins de demostração
