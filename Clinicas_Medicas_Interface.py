@@ -131,9 +131,33 @@ def showMedico():
         insertData = str(row[0]) + ' | ' + row[1] + ' | ' + row[2] + ' | ' + str(row[3]) + ' | ' + row[4] + ' | ' + str(row[5]) + ' | ' +str(row[6])
         lista.insert(lista.size() + 1, insertData)
 
+#Funções de exemplo: Agregação e agrupamento
+def groupBy():
+    db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
+    cursor = db_connection.cursor()
+    cursor.execute(
+        "SELECT distinct C.NomeCli as Nome_clinica, count(CM.CodMed) as Num_medico FROM clinicas_medicas.clinica as C, clinicas_medicas.clinica_medico as CM WHERE C.CodCli = CM.CodCli GROUP BY CM.CodCli;")
+    rows = cursor.fetchall()
+    lista.delete(0, lista.size())
+
+    for row in rows:
+        insertData = str(row[0]) + ' | ' + str(row[1])
+        lista.insert(lista.size() + 1, insertData)
+
+def AgregationFunction():
+    db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
+    cursor = db_connection.cursor()
+    cursor.execute(
+        "select  E.CodEspec, E.NomeEspec, count(*) as Num_Medicos from especialidade as E left join medico as M on E.CodEspec = M.CodEspec group by E.CodEspec having count(*) > 1;")
+    rows = cursor.fetchall()
+    lista.delete(0, lista.size())
+
+    for row in rows:
+        insertData = str(row[0]) + ' | ' + str(row[1]) + ' | ' + str(row[2])
+        lista.insert(lista.size() + 1, insertData)
+
 #INDEXSCREEN
 index = Tk()
-#index.geometry('500x600')
 index['bg'] = '#4ED28E'
 index.title("Clinicas Medicas")
 
@@ -223,6 +247,15 @@ medicoButton = Button(index, text='Medico', font=('italic', 10), bg='white', com
 medicoButton.place(x=50, y=20)
 medicoButton.grid(column=4, row=2, padx=10, pady=10)
 
+#QTD_MEDICOS-CLINICA
+QTDmedicoButton = Button(index, text='GroupBy', font=('italic', 10), bg='white', command=groupBy)
+QTDmedicoButton.place(x=50, y=20)
+QTDmedicoButton.grid(column=4, row=3, padx=10, pady=10)
+
+#Agregar
+agregarButton = Button(index, text='Agregar', font=('italic', 10), bg='white', command=AgregationFunction)
+agregarButton.place(x=50, y=20)
+agregarButton.grid(column=4, row=4, padx=10, pady=10)
 
 index.mainloop()
 
