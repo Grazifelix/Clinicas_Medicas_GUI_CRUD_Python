@@ -2,7 +2,26 @@ Python - MySQL - CRUD - GUI
 
 1.conectar python com MySQL: https://mayararysia.medium.com/python-conex%C3%A3o-com-o-mysql-d919bb596702
 
+2. #INSERT
+#sql = "INSERT INTO medico (CodMed, NomeMed, Genero, Telefone, Email, CodEspec) VALUES (%s, %s, %s, %s, %s, %s)"
+#values = (3063, "Maria Teresa", 'F', '93652165894', 'mariateresa@gmail.com', 3)
+#cursor.execute(sql, values)
+#print(cursor.rowcount, "record inserted.")
 
+#DELETE
+#sql = "DELETE FROM medico WHERE CodMed=3063"
+#cursor.execute(sql)
+#print(cursor.rowcount, "record Deleted")
+#print("\n")
+#cursor.close()
+#db_connection.commit()
+#db_connection.close()
+
+#SELECT
+#sql = "SELECT NomeMed FROM clinicas_medicas.medico join clinica_medico on medico.CodMed = clinica_medico.CodMed where CodEspec = 4 and clinica_medico.CargaHorariaSemanal > 20";
+#cursor.execute(sql)
+#for (NomeMed) in cursor:
+  #print(NomeMed)
 
 
 MATERIAIS

@@ -9,7 +9,7 @@ def inserir():
     Telefone = e_Telefone.get()
     Email = e_Email.get()
     if (CodCli == '' or NomeCli == "" or Endereco == '' or Telefone == "" or Email == ""):
-        MessageBox.showinfo("Insira todas as informações para poder enviar.")
+        MessageBox.showinfo("Insert Status", "Insira todas as informações para poder enviar.")
     else:
         db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208',
                                         database='clinicas_medicas')
@@ -17,22 +17,22 @@ def inserir():
         sql = 'insert into CLINICA (CodCli, NomeCli, Endereco, Telefone, Email) VALUES (%s, %s, %s, %s, %s)'
         values = (CodCli, NomeCli, Endereco,  Telefone, Email)
         cursor.execute(sql, values)
-
+        db_connection.commit()
         #limpando inputs
+        show()
         e_codcli.delete(0, 'end')
         e_NomeCli.delete(0, 'end')
         e_Endereco.delete(0, 'end')
         e_Telefone.delete(0, 'end')
         e_Email.delete(0, 'end')
 
-        MessageBox.showinfo(cursor.rowcount, "record inserted.")
+        MessageBox.showinfo("Insert Status", "Dados Inseridos")
         cursor.close()
-        db_connection.commit()
         db_connection.close()
 
 def delete():
     if (e_codcli.get()==""):
-        MessageBox.showinfo("Adicione o codigo para clinica para excluir")
+        MessageBox.showinfo("Delete Status", "Adicione o codigo para clinica para excluir")
     else:
         db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
         cursor = db_connection.cursor()
@@ -43,7 +43,7 @@ def delete():
         e_Endereco.delete(0, 'end')
         e_Telefone.delete(0, 'end')
         e_Email.delete(0, 'end')
-
+        show()
         MessageBox.showinfo(cursor.rowcount, "Excluido com sucesso")
         cursor.close()
         db_connection.commit()
@@ -56,7 +56,7 @@ def atualizar():
     Telefone = e_Telefone.get()
     Email = e_Email.get()
     if (CodCli == '' or NomeCli == "" or Endereco == '' or Telefone == "" or Email == ""):
-        MessageBox.showinfo("Insira todas as informações para poder atualizar")
+        MessageBox.showinfo("Update Status", "Insira todas as informações para poder atualizar")
     else:
         db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208',
                                         database='clinicas_medicas')
@@ -70,7 +70,7 @@ def atualizar():
         e_Endereco.delete(0, 'end')
         e_Telefone.delete(0, 'end')
         e_Email.delete(0, 'end')
-
+        show()
         MessageBox.showinfo(cursor.rowcount, "Atualizado com sucesso")
         cursor.close()
         db_connection.commit()
@@ -85,7 +85,7 @@ def limparGet():
 
 def get():
     if (e_codcli.get()==""):
-        MessageBox.showinfo("Adicione o codigo para clinica para excluir")
+        MessageBox.showinfo("Delete Status", "Adicione o codigo para clinica para excluir")
     else:
         db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
         cursor = db_connection.cursor()
@@ -102,9 +102,20 @@ def get():
         db_connection.commit()
         db_connection.close()
 
+def show():
+    db_connection = mysqlcn.connect(host='127.0.0.1', user='root', password='Choich@n2208', database='clinicas_medicas')
+    cursor = db_connection.cursor()
+    cursor.execute("SELECT * FROM clinica")
+    rows = cursor.fetchall()
+    lista.delete(0, lista.size())
+
+    for row in rows:
+        insertData = str(row[0]) + ' | '+ row[1]+' | '+row[2]+' | '+row[3]+' | '+row[4] + '\n'
+        lista.insert(lista.size()+1, insertData)
+
 #INDEXSCREEN
 index = Tk()
-index.geometry('500x600')
+#index.geometry('500x600')
 index['bg'] = '#4ED28E'
 index.title("Clinicas Medicas")
 
@@ -171,26 +182,20 @@ limparButton = Button(index, text='Limpar Dados', font=('italic', 10), bg='white
 limparButton.place(x=50, y=20)
 limparButton.grid(column=2, row=8, padx=10, pady=10)
 
+#LISTAGEM LATERAL
+scrollbar = Scrollbar(index, orient="vertical")
+lista = Listbox(index, width=80, height=20, yscrollcommand=scrollbar.set)
+scrollbar.config(command=lista.yview)
+
+lista.grid_rowconfigure(0, weight=1)
+lista.grid_columnconfigure(0, weight=1)
+scrollbar.grid(row=0, column=5, sticky="ns")
+lista.grid(row=0, column=4, sticky="nsew")
+#lista.grid(column=4, row=0, padx=10, pady=10)
+show()
+
 index.mainloop()
 
 
-#INSERT
-#sql = "INSERT INTO medico (CodMed, NomeMed, Genero, Telefone, Email, CodEspec) VALUES (%s, %s, %s, %s, %s, %s)"
-#values = (3063, "Maria Teresa", 'F', '93652165894', 'mariateresa@gmail.com', 3)
-#cursor.execute(sql, values)
-#print(cursor.rowcount, "record inserted.")
 
-#DELETE
-#sql = "DELETE FROM medico WHERE CodMed=3063"
-#cursor.execute(sql)
-#print(cursor.rowcount, "record Deleted")
-#print("\n")
-#cursor.close()
-#db_connection.commit()
-#db_connection.close()
 
-#SELECT
-#sql = "SELECT NomeMed FROM clinicas_medicas.medico join clinica_medico on medico.CodMed = clinica_medico.CodMed where CodEspec = 4 and clinica_medico.CargaHorariaSemanal > 20";
-#cursor.execute(sql)
-#for (NomeMed) in cursor:
-  #print(NomeMed)
